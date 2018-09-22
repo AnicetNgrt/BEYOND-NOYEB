@@ -1,0 +1,20 @@
+{
+  "name": "discordmmo",
+  "version": "0.5.0",
+  "description": "This is a discord mmo rpg bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anicet Nougaret",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.3.2",
+    "gm": "^1.23.1",
+    "jquery": "^3.3.1",
+    "jsdom": "^11.12.0",
+    "nan": "^2.11.0",
+    "sharp": "^0.20.7",
+    "text-image": "^0.6.0"
+  }
+}
