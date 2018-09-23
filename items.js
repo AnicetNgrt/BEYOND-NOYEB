@@ -191,6 +191,7 @@
           quantity = await scrollNumbers(up, itemsActions.repairVec.code, [up,itemName], 0, "How many units of "+items[itemName].name+" do you want to use in order to repair your spacecraft ?**\n**+"+items[itemName].efficiency+"**hp per unit.\nSpacecraft's hp: **"+usrD[up.user.id].vehicle.hp+"/"+vehicles[usrD[up.user.id].vehicle.name].hp+"**", 0, usrD[up.user.id].inventory[itemName].quantity );
           usrD[up.user.id].vehicle.hp += quantity*items[itemName].efficiency;
           usrD[up.user.id].vehicle.hp = usrD[up.user.id].vehicle.hp > vehicles[usrD[up.user.id].vehicle.name].hp ? vehicles[usrD[up.user.id].vehicle.name].hp : usrD[up.user.id].vehicle.hp;
+          await trashItem(up, itemName, quantity);
           wtf();
         }
       },
