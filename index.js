@@ -85,7 +85,7 @@ bot.on('ready', async function() {
 
 
 process.on('unhandledRejection', (reason, promise) => {
-    console.warn('Unhandled promise rejection:', promise, 'reason:', reason.stack || reason);
+    console.warn('\n\n!!!\nUnhandled promise rejection:', promise, 'reason:', reason.stack || reason);
 });
 
 

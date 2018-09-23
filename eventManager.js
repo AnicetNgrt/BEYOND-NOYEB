@@ -75,15 +75,30 @@ async function fight(playlist, memarr) {
         await timeout(10000);
         var receivedAttack = [];
         var damageTaken = Math.sqrt(maxHp);
-        var damageGiven = -1*Math.sqrt(maxHp);
+        var damageGiven = 0;
 
-        timer(att[att.length-2], "**🔵YOUR TURN  \n👉 SEND THE EMOTE AS MANY TIME AS YOU CAN**\n*remaining*: ", crewChannel.id);
-        const filter = msg=>{
+        var messing = await crewChannel.send("**🔵YOUR TURN  **\n👉 REACT/UNREACT THIS MESSAGE WITH THE EMOTE AS MANY TIME AS YOU CAN");
+        var messing2 = await crewChannel.send("*loading...*");
+        for (var m=0; m<att.length-2; m++) {
+          console.log(att[m]);
+          await messing.react(att[m]);
+        }
+        await timeout(500);
+        messing2.delete();
+        timer(att[att.length-2], "**LET'S GO !!!**", crewChannel.id);
+        for (var m=0; m<att.length-2; m++) {
+          console.log(att[m]);
+          messing.react(att[m]);
+        }
+        const filter = (reaction,user)=>{
+          console.log("reac");
           for (var h=0; h<givenAttack.length; h++) {
-            if(msg.content.startsWith(givenAttack[h]) == true) {
-              damageTaken -= att[att.length-1]+(usrD[msg.author.id].lvl/120);
-              damageGiven += att[att.length-1]+(usrD[msg.author.id].lvl/80);
-            } else if (msg.author.id != botID) {
+            if(reaction.emoji.name == givenAttack[h] && user.id != botID) {
+              damageTaken -= att[att.length-1]+(usrD[user.id].lvl/120);
+              damageGiven += att[att.length-1]+(usrD[user.id].lvl/80);
+              console.log(damageGiven);
+              console.log("ok");
+            } else if (user.id != botID) {
               damageTaken += att[att.length-1]*0.7;
               damageGiven -= att[att.length-1]*1.5;
             }
@@ -93,7 +108,9 @@ async function fight(playlist, memarr) {
           }
           return false;
         }
-        await crewChannel.awaitMessages(filter, {max: 1, time:att[att.length-2]*1000});
+        await messing.awaitReactions(filter, {max: 1, time:att[att.length-2]*1000});
+
+        messing.delete();
 
         if (damageGiven < 0) damageGiven = 0;
         if (damageTaken < 0) damageTaken = 0;
@@ -124,6 +141,7 @@ async function fight(playlist, memarr) {
           if (memarr.length > 1) {
             crewChannel.delete();
           }
+          return;
         }
       }
     }
